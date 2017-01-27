@@ -35,7 +35,7 @@
       $scope.product.setName($scope.productName);
       $scope.product.setPrice($scope.productPrice);
       $scope.product.setWeight($scope.productWeight);
-      
+
       $scope.cart.addProduct($scope.product);
 
       console.log(JSON.stringify($scope.cart, null, 2));
@@ -44,6 +44,13 @@
       //ten zapis tworzy nowy obiekt, bez niego bedziemy nadpisywali najnowszy obiekt
       $scope.product = new ProductModel();
       reset();
+    }
+
+    $scope.removeElement = function(id) {
+      // $scope.product.getNumber(id);
+      // console.log($scope.product.getNumber(id));
+      // console.log(id);
+      $scope.cart.removeElement(id);
     }
 
   }
