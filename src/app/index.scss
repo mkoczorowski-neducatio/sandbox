@@ -27,6 +27,17 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
   }
 }
 
+fieldset {
+  border: 1px solid #eee;
+  padding: 30px;
+  border-radius: 5px;
+  overflow: auto;
+  legend {
+    padding-left: 20px;
+    border: 0px;
+  }
+}
+
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

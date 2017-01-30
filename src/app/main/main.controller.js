@@ -14,12 +14,25 @@
       $scope.productWeight = "";
     }
 
+    $scope.productTypes = [
+      {
+        "key": "product",
+        "value": "Product"
+      },
+      {
+        "key": "resource_material",
+        "value": "Resource"
+      }
+    ];
+
+    $scope.selectedType = $scope.productTypes[0];
+
+    $scope.productTypeSwitched = function() {
+
+    };
+
     var cart = new CartModel();
     $scope.cart = cart;
-
-    var product = new ProductModel();
-    console.log(product);
-    $scope.product = product;
 
     $scope.displaySumOfPrice = function() {
       $scope.cart.overAllPrice();

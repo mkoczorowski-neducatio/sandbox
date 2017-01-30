@@ -26,16 +26,14 @@
     <![endif]-->
 
     <div class="container" ng-controller="MainController as main">
-
-      <h3>Dodaj cenę produktu: </h3>
-      <input type="number" ng-model="productPrice">
-
-      <h3>Dodaj wagę produktu</h3>
-      <input type="number" ng-model="productWeight">
-
-      <h3>Dodaj nazwe produktu: </h3>
-      <input type="text" ng-model="productName">
-
+      <fieldset>
+        <legend>Produkt</legend>
+      <select class="form-control" value="" ng-options="item as item.value for item in productTypes" ng-model="selectedType" ng-change="productTypeSwitched()"></select>
+      <div ng-switch="selectedType.key">
+        <product ng-switch-when="product"></product>
+        <resourcematerial ng-switch-when="resource_material"></resourcematerial>
+      </div>
+    </fieldset>
       <h3>Dodaj produkt: </h3>
       <button class="btn btn-warning" ng-click="add()">Dodaj</button>
 
@@ -68,6 +66,8 @@
     <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
     <!-- inject:js -->
     <script src="app/index.module.js"></script>
+    <script src="app/main/directive/resource.material.directive.js"></script>
+    <script src="app/main/directive/product.directive.js"></script>
     <script src="app/main/product.model.js"></script>
     <script src="app/main/main.controller.js"></script>
     <script src="app/main/cart.model.js"></script>
