@@ -1,3 +1,5 @@
+//ten model oczekuje, ze otrzyma dane niezaleznie z ktorego modelu
+
 (function() {
   'use strict';
 
