@@ -39,6 +39,7 @@
       };
 
       this.addProduct = function(product) {
+        console.log(product);
         this.listOfProducts.push(product);
       };
 

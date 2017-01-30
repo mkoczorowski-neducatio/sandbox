@@ -31,6 +31,10 @@
         this.weight = weight;
       };
 
+      this.getName = function() {
+        return this.name;
+      };
+
       /* metoda odbiera od kontrolera bieżącą cenę, którą przekazuje do modelu cart, w której odbiera ją forEach */
       this.getPrice = function() {
         return this.price;
@@ -39,8 +43,6 @@
       this.getWeight = function() {
         return this.weight;
       };
-
-
     }
 
     return ProductModel;

@@ -14,6 +14,7 @@
       $scope.productWeight = "";
     }
 
+    // ng-switch korzysta z tych wartosci i laduje dyrektywy, w zaleznosci od naszego wyboru
     $scope.productTypes = [
       {
         "key": "product",
@@ -25,13 +26,11 @@
       }
     ];
 
+    /* tworzy globalny obiekt, ktory bedzie nadpisany w wybranej w ng-switch dyrektywie. Domyslnie powinno nastapic przypisanie nazwy obiektu do $scope,
+      jednak zasięg $scope ogranicza to, dlatego obiekt nadpisywany jest do globalnego obiektu, ktory obsluzy formularze, ktore zostana wyslane do cart.model.js */
     $scope.properties = {};
 
     $scope.selectedType = $scope.productTypes[0];
-
-    $scope.productTypeSwitched = function() {
-
-    };
 
     var cart = new CartModel();
     $scope.cart = cart;

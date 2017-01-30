@@ -21,6 +21,10 @@
         this.name = name;
       };
 
+      this.getName = function() {
+        return this.name;
+      };
+
       this.getPrice = function() {
         return this.unitPrice * this.count;
       };
