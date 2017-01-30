@@ -25,6 +25,8 @@
       }
     ];
 
+    $scope.properties = {};
+
     $scope.selectedType = $scope.productTypes[0];
 
     $scope.productTypeSwitched = function() {
@@ -45,18 +47,14 @@
     }
 
     $scope.add = function() {
-      $scope.product.setName($scope.productName);
-      $scope.product.setPrice($scope.productPrice);
-      $scope.product.setWeight($scope.productWeight);
-
-      $scope.cart.addProduct($scope.product);
+      $scope.cart.addProduct($scope.properties.product);
 
       console.log(JSON.stringify($scope.cart, null, 2));
       // console.log(JSON.stringify($scope.product, null, 2));
 
       //ten zapis tworzy nowy obiekt, bez niego bedziemy nadpisywali najnowszy obiekt
-      $scope.product = new ProductModel();
-      reset();
+      //$scope.product = new ProductModel();
+      //reset();
     }
 
     $scope.removeElement = function(id) {

@@ -13,6 +13,7 @@
       link: function($scope) {
         var product = new ProductModel();
         $scope.product = product;
+        $scope.properties.product = product;
       }
     };
   };

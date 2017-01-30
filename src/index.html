@@ -28,6 +28,7 @@
       <fieldset>
         <legend>Produkt</legend>
       <select class="form-control" value="" ng-options="item as item.value for item in productTypes" ng-model="selectedType" ng-change="productTypeSwitched()"></select>
+      {{properties}}
       <div ng-switch="selectedType.key">
         <product ng-switch-when="product"></product>
         <resourcematerial ng-switch-when="resource_material"></resourcematerial>
