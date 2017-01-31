@@ -51,7 +51,7 @@
 
     $scope.add = function() {
       $scope.cart.addProduct($scope.properties.product);
-
+      $scope.$broadcast("reset");
       console.log(JSON.stringify($scope.cart, null, 2));
       // console.log(JSON.stringify($scope.product, null, 2));
 
