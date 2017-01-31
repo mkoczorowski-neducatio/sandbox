@@ -23,6 +23,10 @@
       {
         "key": "resource_material",
         "value": "Resource"
+      },
+      {
+        "key": "cars",
+        "value": "Cars"
       }
     ];
 

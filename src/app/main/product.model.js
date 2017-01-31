@@ -43,6 +43,8 @@
       this.getWeight = function() {
         return this.weight;
       };
+
+
     }
 
     return ProductModel;
