@@ -9,7 +9,7 @@
   function ResourceMaterial(ResourceMaterialModel) {
     return {
       restrict: 'E',
-      templateUrl: 'app/main/directive/resource.material.html',
+      templateUrl: 'app/main/directive/html/resource.material.html',
       link: function($scope) {
         //nowy obiekt typu ResourceMaterialModel
         var product = new ResourceMaterialModel();

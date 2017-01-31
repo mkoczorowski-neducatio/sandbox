@@ -9,7 +9,7 @@
   function ProductDirective(ProductModel) {
     return {
       restrict: 'E',
-      templateUrl: 'app/main/directive/product.html',
+      templateUrl: 'app/main/directive/html/product.html',
       link: function($scope) {
         var product = new ProductModel();
         $scope.product = product;
