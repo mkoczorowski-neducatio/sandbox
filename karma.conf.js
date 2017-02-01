@@ -69,6 +69,7 @@ module.exports = function(config) {
       'karma-phantomjs-shim',
       'karma-coverage',
       'karma-jasmine',
+      'karma-spec-reporter',
       'karma-ng-html2js-preprocessor'
     ],
 
@@ -77,7 +78,7 @@ module.exports = function(config) {
       dir : 'coverage/'
     },
 
-    reporters: ['progress'],
+    reporters: ['spec'],
 
     proxies: {
       '/assets/': path.join('/base/', conf.paths.src, '/assets/')

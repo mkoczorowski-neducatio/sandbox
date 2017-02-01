@@ -15,18 +15,13 @@
       // tablica odbiera obiekty dodawane dynamicznie, które sa przekazywane do metody overAllPrice
       this.listOfProducts = [];
       this.sumOfWeight = 0;
-      this.sumOfPrice = 0;
-      console.log(this.listOfProducts);
+      //console.log(this.listOfProducts);
 
       // metoda iteruje po tablicy obiektów, które są przyjmowane z modelu listOfProducts i zapisywane do tablicy this.listOfProducts
       this.overAllPrice = function() {
-        this.sumOfPrice = 0;
-        this.sumOfWeight = 0;
-        //aby uzyskać dostęp do zmiennych poza scope, musimy przed zamknięciem forEacha dodać frazę this, która odblokuje dostęp do globalnych zmiennych.
-        this.listOfProducts.forEach(function(product) {
-          this.sumOfPrice = this.sumOfPrice + product.getPrice();
-        }, this);
-        return this.sumOfPrice;
+        return this.listOfProducts.reduce(function(sum, product) {
+          return sum+product.getPrice();
+        }, 0);
       };
 
       this.overAllWeight = function() {
@@ -39,7 +34,6 @@
       };
 
       this.addProduct = function(product) {
-        console.log(product);
         this.listOfProducts.push(product);
       };
 

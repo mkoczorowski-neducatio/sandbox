@@ -15,38 +15,39 @@
       /*zdefiniowane zmienne, które oczekują wartości z kontrolera. */
       this.price = price || 0;
       this.name = name || "";
-      this.weight = weight || "";
+      this.weight = weight || 0;
 
       /*poniżej zostały zdefiniowane metody, które służą do podstawiania wartości
         w kontrolerze wywołujemy stworzone funkcje, ktore przekazują wartości z widoku do tych funkcji, a te komunikują się z modelem*/
-      this.setPrice = function(price) {
-        this.price = price;
-      };
-
-      this.setName = function(name) {
-        this.name = name;
-      };
-
-      this.setWeight = function(weight) {
-        this.weight = weight;
-      };
-
-      this.getName = function() {
-        return this.name;
-      };
-
-      /* metoda odbiera od kontrolera bieżącą cenę, którą przekazuje do modelu cart, w której odbiera ją forEach */
-      this.getPrice = function() {
-        return this.price;
-      };
-
-      this.getWeight = function() {
-        return this.weight;
-      };
-
-
     }
+    //zamiast przypisywac jak na gorze do konkretnego obiektu za kazdym razem nowe metody
+    //dodajemy je w prototypie, dzieki czemu sa wspolne dla kazdego obiektu stworzonego na bazie ProductModel
 
+    //dodatkowo mozemu uzyc angular.extend by nie pisac za kazdym razem Obiekt.prototyp.funkcja czy Obiekt.prototyp.property, tylko
+    //uzywac notacji json'owej
+    angular.extend(ProductModel.prototype, {
+
+      setPrice: function(price) {
+        this.price = price;
+      },
+      getPrice: function() {
+        return this.price;
+      },
+      setName: function(name) {
+        this.name = name;
+      },
+      setWeight: function(weight) {
+        this.weight = weight;
+      },
+      getName: function() {
+        return this.name;
+      },
+      getWeight: function() {
+        return this.weight;
+      }
+    })
+
+    //console.log(ProductModel.prototype);
     return ProductModel;
   }
 })();
