@@ -6,9 +6,9 @@
     .factory('CarsModel', CarsFactory);
 
     function CarsFactory() {
-      var CarsModel = function(name, weight, price) {
+      var CarsModel = function(price, weight, name) {
         this.name = name || "";
-        this.weight = weight || "";
+        this.weight = weight || 0;
         this.price = price || 0;
 
         this.setName = function(name) {

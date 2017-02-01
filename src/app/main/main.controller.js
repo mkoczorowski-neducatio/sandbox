@@ -8,12 +8,6 @@
   /** @ngInject */
   function MainController($scope, CartModel, ProductModel) {
 
-    var reset = function() {
-      $scope.productName = "";
-      $scope.productPrice = "";
-      $scope.productWeight = "";
-    }
-
     // ng-switch korzysta z tych wartosci i laduje dyrektywy, w zaleznosci od naszego wyboru
     $scope.productTypes = [
       {
@@ -57,7 +51,6 @@
 
       //ten zapis tworzy nowy obiekt, bez niego bedziemy nadpisywali najnowszy obiekt
       //$scope.product = new ProductModel();
-      //reset();
     }
 
     $scope.removeElement = function(id) {
