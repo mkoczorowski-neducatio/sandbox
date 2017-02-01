@@ -8,13 +8,13 @@
   /** @ngInject */ /* obiekt angularowy */
   function ResourceMaterialFactory() {
 
-    var ResourceMaterialModel = function(unitPrice, name, unitWeight, count) {
+    var ResourceMaterialModel = function(price, name, weight, count) {
 
-    //  this.price = 0;
+      //  this.price = 0;
       this.name = name || "";
-    //  this.weight = 0;
-      this.unitPrice = unitPrice || 0;
-      this.unitWeight = unitWeight || 0;
+      //  this.weight = 0;
+      this.price = price || 0;
+      this.weight = weight || 0;
       this.count = count || 0;
 
       //dodanie do obiektu wartosci z widoku
@@ -22,11 +22,11 @@
         this.name = name;
       };
 
-      this.setPrice = function(unitPrice) {
+      this.setPrice = function(price) {
         this.price = price;
       };
 
-      this.setWeight = function(unitWeight) {
+      this.setWeight = function(weight) {
         this.weight = weight;
       };
 
@@ -36,11 +36,11 @@
       };
 
       this.getPrice = function() {
-        return this.unitPrice * this.count;
+        return this.price * this.count;
       };
 
       this.getWeight = function() {
-        return this.unitWeight * this.count;
+        return this.weight * this.count;
       };
     };
 
