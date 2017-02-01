@@ -18,6 +18,14 @@
         return randomSpanFromTo(Math.min(motherFeature, fatherFeature), Math.max(motherFeature, fatherFeature));
       }
 
+      var whoIsMother = function(human1, human2) {
+        return human1.gender === "f" ? human1 : human2;
+      };
+
+      var whoIsFather = function(human1, human2) {
+        return human1.gender === "m" ? human1 : human2;
+      };
+
       var HumanModel = function(mother, father, gender) {
         this.mother = mother;
         this.father = father;
@@ -49,17 +57,13 @@
             this.alive = (this.age <= this.determineMaxAge());
           }
         },
+        canCross: function(human1, human2) {
+          return human1.gender != human2.gender;
+        },
         cross: function(partner) {
-          if (this.gender != partner.gender) {
-            var mother = null,
-                father = null;
-            if (this.gender === "f") {
-              mother = this,
-              father = partner;
-            } else {
-              mother = partner,
-              father = this;
-            }
+          if (this.canCross(this, partner)) {
+            var mother = whoIsMother(this, partner),
+                father = whoIsFather(this, partner);
             var children = [];
             var maxChildrenCount = randomSpanFromTo(1, 3);
             for(var i=0; i<maxChildrenCount; i++) {
