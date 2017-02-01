@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope, CartModel, ProductModel) {
+  function MainController($scope, CartModel, ProductModel, HumanModel) {
 
     // ng-switch korzysta z tych wartosci i laduje dyrektywy, w zaleznosci od naszego wyboru
     $scope.productTypes = [
@@ -23,6 +23,29 @@
         "value": "Cars"
       }
     ];
+
+    var Eve = {
+        features: {
+          inteligence: 2,
+          appearance: 10,
+          health: 5
+        }
+      }
+    ;
+    var Adam = {
+        features: {
+          inteligence: 10,
+          appearance: 6,
+          health: 10
+        }
+      };
+
+    var firstHumanFemale = new HumanModel(Eve, Adam, "f");
+    var firstHumanMale = new HumanModel(Eve, Adam, "m");
+
+    var children = firstHumanFemale.cross(firstHumanMale);
+
+    console.log(children);
 
     /* tworzy globalny obiekt, ktory bedzie nadpisany w wybranej w ng-switch dyrektywie. Domyslnie powinno nastapic przypisanie nazwy obiektu do $scope,
       jednak zasięg $scope ogranicza to, dlatego obiekt nadpisywany jest do globalnego obiektu, ktory obsluzy formularze, ktore zostana wyslane do cart.model.js */
