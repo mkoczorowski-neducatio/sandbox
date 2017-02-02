@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope, CartModel, ProductModel, HumanModel) {
+  function MainController($scope, CartModel, ProductModel, HumanModel, NamesProvider) {
 
     // ng-switch korzysta z tych wartosci i laduje dyrektywy, w zaleznosci od naszego wyboru
     $scope.productTypes = [
@@ -42,8 +42,10 @@
       };
 
     var Halina = new HumanModel(Eve, Adam);
+    Halina.setName("Halina Jakakolwiek");
     Halina._presetProperties({gender: "f"});
     var Ferdynand = new HumanModel(Eve, Adam);
+    Ferdynand.setName("Ferdynand Johnson");
     Ferdynand._presetProperties({gender: "m"});
 
     console.log("Pierwsza kobieta: ", Halina);

@@ -5,7 +5,8 @@
     .module('cartProject')
     .factory('HumanModel', HumanModelFactory);
 
-    function HumanModelFactory() {
+    /** @ngInject */
+    function HumanModelFactory(NamesProvider) {
 
       //funkcje pomocnicze
       var genders = ["f", "m"];
@@ -68,6 +69,14 @@
           }
         },
 
+        setName: function(name) {
+          this.name = name;
+        },
+
+        setGender: function(gender) {
+          this.gender = gender;
+        },
+
         assignFeatures: function() {
           this.features = {
             inteligence: this.assignSingleFeature("inteligence"),
@@ -81,17 +90,6 @@
           return (this.features.health * 10) + this.luck;
         },
 
-        getInteligence: function() {
-          return this.features.inteligence;
-        },
-
-        getAppearance: function() {
-          return this.features.appearance;
-        },
-
-        getHealth: function() {
-          return this.features.health;
-        },
         //jeszcze nieuzywana funkcja
         live: function() {
           if (this.alive) {
@@ -105,6 +103,9 @@
           return human1.gender != human2.gender;
         },
 
+        getLastName: function() {
+          return this.name.split(" ")[1];
+        },
 
         cross: function(mate) {
         //  console.log(this, partner);
@@ -115,8 +116,8 @@
             var maxChildrenCount = randomSpanFromTo(1, 3);
             for(var i=0; i<maxChildrenCount; i++) {
               var child = new HumanModel(mother, father);
-              child.birth();
               children.push(child);
+              child.setName(NamesProvider.generateName(child.gender) + " " + father.getLastName());
               console.log("Ilosc dzieci: ",i+1, children);
             }
             return children;
