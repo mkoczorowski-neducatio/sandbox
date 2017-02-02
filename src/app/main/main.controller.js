@@ -41,14 +41,15 @@
         }
       };
 
-    var firstHumanFemale = new HumanModel(Eve, Adam, "f");
-    var firstHumanMale = new HumanModel(Eve, Adam, "m");
+    var Halina = new HumanModel(Eve, Adam);
+    Halina._presetProperties({gender: "f"});
+    var Ferdynand = new HumanModel(Eve, Adam);
+    Ferdynand._presetProperties({gender: "m"});
 
-    console.log("Pierwsza kobieta: ", firstHumanFemale);
-    console.log("Pierwszy mezczyzna: ", firstHumanMale);
+    console.log("Pierwsza kobieta: ", Halina);
+    console.log("Pierwszy mezczyzna: ", Ferdynand);
 
-
-    var children = firstHumanFemale.cross(firstHumanFemale,firstHumanMale);
+    var children = Halina.cross(Ferdynand);
     console.log("Ich dzieci: ", children);
 
     /* tworzy globalny obiekt, ktory bedzie nadpisany w wybranej w ng-switch dyrektywie. Domyslnie powinno nastapic przypisanie nazwy obiektu do $scope,

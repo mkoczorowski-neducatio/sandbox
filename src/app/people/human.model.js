@@ -33,31 +33,65 @@
         return human1.gender === "m" ? human1 : human2;
       };
 
-      var HumanModel = function(mother, father, gender) {
+      var HumanModel = function(mother, father) {
         this.mother = mother;
         this.father = father;
-        this.gender = gender;
         this.name = null;
         this.alive = true;
         this.age = 0;
+        this.luck = 0;
+        this.features = {
+          inteligence: 0,
+          appearance: 0,
+          health: 0
+        };
         this.birth();
       };
 
       HumanModel.prototype = {
+        _presetProperties: function(properties) {
+          angular.extend(this, properties);
+        },
+
         birth: function() {
+          this.gender = getRandomGender();
+          this.assignFeatures();
+          this.luck = Math.round(Math.random()*40 - 20);
+          //-20, 20
+        },
+
+        assignSingleFeature: function(featureName) {
+          if (angular.isDefined(this.mother) && angular.isDefined(this.father)) {
+            return randomizeFromParents(this.mother.features[featureName], this.father.features[featureName])
+          } else {
+            return randomSpanFromTo(1, 10);
+          }
+        },
+
+        assignFeatures: function() {
           this.features = {
-            "inteligence": randomizeFromParents(this.mother.features.inteligence, this.father.features.inteligence),
-            "appearance": randomizeFromParents(this.mother.features.appearance, this.father.features.appearance),
-            "health": randomizeFromParents(this.mother.features.health, this.father.features.health)
+            inteligence: this.assignSingleFeature("inteligence"),
+            appearance: this.assignSingleFeature("appearance"),
+            health: this.assignSingleFeature("health")
           };
-          this.seed = Math.round(Math.random()*40 - 20);
         },
 
         //funkcja bierze z obiektu, ktory ma wygenerowane losowo propertiesy, losuje i dodaje
         determineMaxAge: function() {
-          return (this.features.health * 10) + this.seed;
+          return (this.features.health * 10) + this.luck;
         },
 
+        getInteligence: function() {
+          return this.features.inteligence;
+        },
+
+        getAppearance: function() {
+          return this.features.appearance;
+        },
+
+        getHealth: function() {
+          return this.features.health;
+        },
         //jeszcze nieuzywana funkcja
         live: function() {
           if (this.alive) {
@@ -70,15 +104,19 @@
         canCross: function(human1, human2) {
           return human1.gender != human2.gender;
         },
-        cross: function(female, male) {
+
+
+        cross: function(mate) {
         //  console.log(this, partner);
-          if (this.canCross(female, male)) {
-            var mother = whoIsMother(female, male),
-                father = whoIsFather(female, male);
+          if (this.canCross(this, mate)) {
+            var mother = whoIsMother(this, mate),
+                father = whoIsFather(this, mate);
             var children = [];
             var maxChildrenCount = randomSpanFromTo(1, 3);
             for(var i=0; i<maxChildrenCount; i++) {
-              children.push(new HumanModel(mother, father, getRandomGender()));
+              var child = new HumanModel(mother, father);
+              child.birth();
+              children.push(child);
               console.log("Ilosc dzieci: ",i+1, children);
             }
             return children;
