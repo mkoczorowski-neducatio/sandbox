@@ -135,5 +135,49 @@ describe('people.HumanModel', function () {
 
   });
 
-  
+  describe('cross', function() {
+
+    it('should not return any children when genders of mates are equal', function() {
+      sut.setGender("f");
+      var specimenB = new _HumanModel();
+      specimenB.setGender("f");
+
+      expect(sut.cross(specimenB)).toEqual(null);
+    });
+
+    describe("should create children", function() {
+
+      var specimenB;
+      var children;
+      var firstBorn;
+
+      beforeEach(inject(function (HumanModel) {
+        sut._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}, luck: 5, gender: "f", name: "Jessie Johnson"});
+        specimenB = new _HumanModel();
+        specimenB._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}, luck: 5, gender: "m", name: "John Stefanson"})
+
+        children = sut.cross(specimenB);
+        firstBorn = children[0];
+      }));
+
+      it('array of children should not be empty', function() {
+        expect(children).toBeNonEmptyArray();
+      });
+
+      it('child should have fathers lastname', function() {
+        var lastname = firstBorn.getLastName();
+        expect(lastname).toEqual("Stefanson");
+      });
+
+      it('should assign parents correctly', function() {
+        expect(firstBorn.mother).toEqual(sut);
+        expect(firstBorn.father).toEqual(specimenB);
+      });
+
+    });
+
+
+  });
+
+
 });

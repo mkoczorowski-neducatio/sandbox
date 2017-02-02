@@ -120,7 +120,7 @@
               var child = new HumanModel(mother, father);
               child.setName(NamesProvider.generateName(child.gender) + " " + father.getLastName());
               children.push(child);
-              console.log("Ilosc dzieci: ",i+1, children);
+              //console.log("Ilosc dzieci: ",i+1, children);
             }
             return children;
           }
