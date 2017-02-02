@@ -48,4 +48,92 @@ describe('people.HumanModel', function () {
     expect(sut.features.inteligence).toBe(1);
   });
 
+  describe('assignSingleFeature', function() {
+
+    it('should generate features without parents set', function() {
+      sut.assignSingleFeature("inteligence");
+      expect(sut.features.inteligence).toBeWithinRange(1, 10);
+    });
+
+    it('should generate features based on parents', function() {
+      var father = new _HumanModel();
+      var mother = new _HumanModel();
+      father._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}});
+      mother._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}});
+      var person = new _HumanModel(mother, father);
+
+      person.assignSingleFeature("appearance");
+
+      expect(person.features.appearance).toEqual(5);
+    });
+  });
+
+  describe('assignFeatures', function() {
+
+    it('should assign all features randomly', function() {
+      sut.assignFeatures();
+      expect(sut.features.inteligence).toBeWithinRange(1, 10);
+      expect(sut.features.appearance).toBeWithinRange(1, 10);
+      expect(sut.features.health).toBeWithinRange(1, 10);
+    });
+
+    it('should generate features based on parents', function() {
+      var father = new _HumanModel();
+      var mother = new _HumanModel();
+      father._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}});
+      mother._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}});
+      var person = new _HumanModel(mother, father);
+
+      person.assignFeatures();
+
+      expect(person.features.inteligence).toEqual(1);
+      expect(person.features.appearance).toEqual(5);
+      expect(person.features.health).toEqual(3);
+    });
+  });
+
+  describe('determineMaxAge', function() {
+
+    it('should calculate max age based on luck and health', function() {
+      sut._presetProperties({features: {inteligence: 1, appearance: 5, health: 3}, luck: 5});
+      expect(sut.determineMaxAge()).toEqual(35);
+    });
+
+    it('should calculate max age that should be 0 for low luck and health', function() {
+      sut._presetProperties({features: {inteligence: 1, appearance: 5, health: 1}, luck: -20});
+      expect(sut.determineMaxAge()).toEqual(0);
+    });
+
+  });
+
+
+  describe('canCross', function() {
+
+    it('can cross two specimen of different genders', function() {
+      sut.setGender("f");
+      var specimenB = new _HumanModel();
+      specimenB.setGender("m");
+
+      expect(sut.canCross(sut, specimenB)).toEqual(true);
+    });
+
+    it('cannot cross two specimen of same genders', function() {
+      sut.setGender("m");
+      var specimenB = new _HumanModel();
+      specimenB.setGender("m");
+
+      expect(sut.canCross(sut, specimenB)).toEqual(false);
+    });
+
+    it('cannot cross two specimen of same genders 2', function() {
+      sut.setGender("f");
+      var specimenB = new _HumanModel();
+      specimenB.setGender("f");
+
+      expect(sut.canCross(sut, specimenB)).toEqual(false);
+    });
+
+  });
+
+  
 });

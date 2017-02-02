@@ -54,27 +54,12 @@
           angular.extend(this, properties);
         },
 
-        birth: function() {
-          this.gender = getRandomGender();
-          this.assignFeatures();
-          this.luck = Math.round(Math.random()*40 - 20);
-          //-20, 20
-        },
-
         assignSingleFeature: function(featureName) {
           if (angular.isDefined(this.mother) && angular.isDefined(this.father)) {
-            return randomizeFromParents(this.mother.features[featureName], this.father.features[featureName])
+            return randomizeFromParents(this.mother.features[featureName], this.father.features[featureName]);
           } else {
             return randomSpanFromTo(1, 10);
           }
-        },
-
-        setName: function(name) {
-          this.name = name;
-        },
-
-        setGender: function(gender) {
-          this.gender = gender;
         },
 
         assignFeatures: function() {
@@ -85,26 +70,43 @@
           };
         },
 
+        birth: function() {
+          this.gender = getRandomGender();
+          this.assignFeatures();
+          this.luck = Math.round(Math.random()*40 - 20);
+          //-20, 20
+        },
+
+        setName: function(name) {
+          this.name = name;
+        },
+
+        setGender: function(gender) {
+          this.gender = gender;
+        },
+
+        getLastName: function() {
+          return this.name.split(" ")[1];
+        },
+
         //funkcja bierze z obiektu, ktory ma wygenerowane losowo propertiesy, losuje i dodaje
         determineMaxAge: function() {
-          return (this.features.health * 10) + this.luck;
+          return Math.max(0, (this.features.health * 10) + this.luck);
         },
 
         //jeszcze nieuzywana funkcja
+        /**
         live: function() {
           if (this.alive) {
             this.age++;
             this.alive = (this.age <= this.determineMaxAge());
           }
         },
+        */
 
         //sprawdza, czy płeć jest różna od siebie
         canCross: function(human1, human2) {
           return human1.gender != human2.gender;
-        },
-
-        getLastName: function() {
-          return this.name.split(" ")[1];
         },
 
         cross: function(mate) {
@@ -116,8 +118,8 @@
             var maxChildrenCount = randomSpanFromTo(1, 3);
             for(var i=0; i<maxChildrenCount; i++) {
               var child = new HumanModel(mother, father);
-              children.push(child);
               child.setName(NamesProvider.generateName(child.gender) + " " + father.getLastName());
+              children.push(child);
               console.log("Ilosc dzieci: ",i+1, children);
             }
             return children;
