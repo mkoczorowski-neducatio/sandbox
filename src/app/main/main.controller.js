@@ -24,14 +24,15 @@
       }
     ];
 
+
+    //definicja pierwszego i drugiego obiektu
     var Eve = {
         features: {
           inteligence: 2,
           appearance: 10,
           health: 5
         }
-      }
-    ;
+      };
     var Adam = {
         features: {
           inteligence: 10,
@@ -43,9 +44,12 @@
     var firstHumanFemale = new HumanModel(Eve, Adam, "f");
     var firstHumanMale = new HumanModel(Eve, Adam, "m");
 
-    var children = firstHumanFemale.cross(firstHumanMale);
+    console.log("Pierwsza kobieta: ", firstHumanFemale);
+    console.log("Pierwszy mezczyzna: ", firstHumanMale);
 
-    console.log(children);
+
+    var children = firstHumanFemale.cross(firstHumanFemale,firstHumanMale);
+    console.log("Ich dzieci: ", children);
 
     /* tworzy globalny obiekt, ktory bedzie nadpisany w wybranej w ng-switch dyrektywie. Domyslnie powinno nastapic przypisanie nazwy obiektu do $scope,
       jednak zasięg $scope ogranicza to, dlatego obiekt nadpisywany jest do globalnego obiektu, ktory obsluzy formularze, ktore zostana wyslane do cart.model.js */

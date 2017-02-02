@@ -6,18 +6,25 @@
     .factory('HumanModel', HumanModelFactory);
 
     function HumanModelFactory() {
+
+      //funkcje pomocnicze
       var genders = ["f", "m"];
+
+      //funkcja losuje pomiedzy kobietą z mężczyzną generując randomowo płeć nowego obiektu
       var getRandomGender = function() {
         return genders[Math.round(Math.random())];
       };
+
       var randomSpanFromTo = function(from, to) {
         return Math.round((Math.random() * (to-from)) + from);
       };
 
+      //funkcja przechwytuje jako parametry inteligencję, wygląd i zdrowie z rodziców, ktorzy maja poczatkowe wartości
       var randomizeFromParents = function(motherFeature, fatherFeature) {
         return randomSpanFromTo(Math.min(motherFeature, fatherFeature), Math.max(motherFeature, fatherFeature));
       }
 
+      //funkcja
       var whoIsMother = function(human1, human2) {
         return human1.gender === "f" ? human1 : human2;
       };
@@ -45,36 +52,40 @@
           };
           this.seed = Math.round(Math.random()*40 - 20);
         },
-        setName: function(name) {
-          this.name = name;
-        },
+
+        //funkcja bierze z obiektu, ktory ma wygenerowane losowo propertiesy, losuje i dodaje
         determineMaxAge: function() {
           return (this.features.health * 10) + this.seed;
         },
+
+        //jeszcze nieuzywana funkcja
         live: function() {
           if (this.alive) {
             this.age++;
             this.alive = (this.age <= this.determineMaxAge());
           }
         },
+
+        //sprawdza, czy płeć jest różna od siebie
         canCross: function(human1, human2) {
           return human1.gender != human2.gender;
         },
-        cross: function(partner) {
-          if (this.canCross(this, partner)) {
-            var mother = whoIsMother(this, partner),
-                father = whoIsFather(this, partner);
+        cross: function(female, male) {
+        //  console.log(this, partner);
+          if (this.canCross(female, male)) {
+            var mother = whoIsMother(female, male),
+                father = whoIsFather(female, male);
             var children = [];
             var maxChildrenCount = randomSpanFromTo(1, 3);
             for(var i=0; i<maxChildrenCount; i++) {
               children.push(new HumanModel(mother, father, getRandomGender()));
+              console.log("Ilosc dzieci: ",i+1, children);
             }
             return children;
           }
           return null;
-        }
+        },
       };
-
       return HumanModel;
     }
 })();
