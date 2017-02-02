@@ -6,7 +6,7 @@
     .factory('HumanModel', HumanModelFactory);
 
     /** @ngInject */
-    function HumanModelFactory(NamesProvider) {
+    function HumanModelFactory(NamesProvider, Timeline) {
 
       //funkcje pomocnicze
       var genders = ["f", "m"];
@@ -34,7 +34,7 @@
         return human1.gender === "m" ? human1 : human2;
       };
 
-      var HumanModel = function(mother, father) {
+      var HumanModel = function(mother, father, properties) {
         this.mother = mother;
         this.father = father;
         this.name = null;
@@ -47,6 +47,9 @@
           health: 0
         };
         this.birth();
+        if (properties) {
+          this._presetProperties(properties);
+        }
       };
 
       HumanModel.prototype = {
@@ -74,6 +77,8 @@
           this.gender = getRandomGender();
           this.assignFeatures();
           this.luck = Math.round(Math.random()*40 - 20);
+          this.liveEvent = this.live.bind(this);
+          Timeline.on("newYear", this.liveEvent);
           //-20, 20
         },
 
@@ -95,14 +100,17 @@
         },
 
         //jeszcze nieuzywana funkcja
-        /**
         live: function() {
           if (this.alive) {
             this.age++;
-            this.alive = (this.age <= this.determineMaxAge());
+            this.alive = (this.age < this.determineMaxAge());
+            if (!this.alive) {
+              Timeline.off("newYear", this.liveEvent);
+              Timeline.trigger("death", {name: this.name});
+            }
           }
+          //console.log("["+this.name + "] age: "+this.age + "/" +this.determineMaxAge());
         },
-        */
 
         //sprawdza, czy płeć jest różna od siebie
         canCross: function(human1, human2) {
@@ -119,6 +127,7 @@
             for(var i=0; i<maxChildrenCount; i++) {
               var child = new HumanModel(mother, father);
               child.setName(NamesProvider.generateName(child.gender) + " " + father.getLastName());
+              Timeline.trigger("birth", {name: child.name});
               children.push(child);
               //console.log("Ilosc dzieci: ",i+1, children);
             }
