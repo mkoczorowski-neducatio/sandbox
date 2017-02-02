@@ -55,7 +55,7 @@ module.exports = function(config) {
 
     logLevel: 'WARN',
 
-    frameworks: ['phantomjs-shim', 'jasmine', 'angular-filesort'],
+    frameworks: ['phantomjs-shim', 'jasmine', 'jasmine-matchers', 'angular-filesort'],
 
     angularFilesort: {
       whitelist: [path.join(conf.paths.src, '/**/!(*.html|*.spec|*.mock).js')]
@@ -70,6 +70,7 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-jasmine',
       'karma-spec-reporter',
+      'karma-jasmine-matchers',
       'karma-ng-html2js-preprocessor'
     ],
 
