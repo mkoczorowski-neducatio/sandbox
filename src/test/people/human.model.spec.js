@@ -119,6 +119,7 @@ describe('people.HumanModel', function () {
 
     it('cannot cross two specimen of same genders', function() {
       sut.setGender("m");
+
       var specimenB = new _HumanModel();
       specimenB.setGender("m");
 
