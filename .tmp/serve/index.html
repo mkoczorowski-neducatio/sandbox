@@ -26,52 +26,14 @@
     <![endif]-->
 
     <div class="container" ng-controller="MainController as main">
-      <fieldset>
-        <legend>Produkt</legend>
-      <select class="form-control" ng-options="item as item.value for item in productTypes" ng-model="selectedType"></select>
-      {{properties}}
-      <div ng-switch="selectedType.key">
-        <product ng-switch-when="product"></product>
-        <resourcematerial ng-switch-when="resource_material"></resourcematerial>
-        <cars ng-switch-when="cars"></cars>
-      </div>
-    </fieldset>
-      <h3>Dodaj produkt: </h3>
-      <button class="btn btn-warning" ng-click="add()">Dodaj</button>
-      <table class="table">
-        <tr>
-          <td>Cena produktu </td>
-          <td>Waga produktu </td>
-          <td>Nazwa produktu</td>
-          <td>Usuń</td>
-        </tr>
-        <tr ng-repeat="product in cart.listOfProducts track by $index">
-          <td>{{ product.getPrice()  }}</td>
-          <td>{{ product.getWeight() }}</td>
-          <td>{{ product.getName()   }}</td>
-          <td><button class="btn btn-danger" ng-click="removeElement($index)">X</button></td>
-        </tr>
-      </table>
-      <div class="container">
-        <div class="row">
-          <div class="text-center">
-            <div class="col-md-6">
-              <h3>Suma cen</h3>
-              <button class="btn btn-success" ng-click="displaySumOfPrice()">Pokaż sumę</button>
-              <p>aktualna suma: {{ cart.overAllPrice() }}</p>
-            </div>
-            <div class="col-md-6">
-              <h3>Suma wag</h3>
-              <button class="btn btn-success" ng-click="displaySumOfWeight()">Pokaż sumę</button>
-              <p>aktualna suma: {{ cart.overAllWeight() }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
+      <h3>People list:</h3>
+      <ul>
+        <li ng-if="person.alive" ng-repeat="person in people">
+          <strong>{{person.name}}</strong>: age: {{person.age}}, maxAge: {{person.determineMaxAge()}}
+          <span ng-if="person.gender === 'f'" class="label label-danger">Female</span>
+          <span ng-if="(person.age > 15 && person.age < 40)" class="label label-success">Can cross</span>
+        </li>
+      </ul>
     </div>
 
     <!-- build:js(src) scripts/vendor.js -->
@@ -90,6 +52,9 @@
     <script src="app/main/directive/js/resource.material.directive.js"></script>
     <script src="app/main/directive/js/product.directive.js"></script>
     <script src="app/main/directive/js/cars.directive.js"></script>
+    <script src="app/people/timeline.js"></script>
+    <script src="app/people/population.js"></script>
+    <script src="app/people/names.provider.js"></script>
     <script src="app/people/human.model.js"></script>
     <script src="app/main/resource.material.model.js"></script>
     <script src="app/main/product.model.js"></script>

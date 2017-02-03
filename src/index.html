@@ -27,12 +27,12 @@
     <div class="container" ng-controller="MainController as main">
       <h3>People list:</h3>
       <ul>
-        <li ng-if="person.alive" ng-repeat="person in people"><strong>{{person.name}}</strong>: age: {{person.age}}, maxAge: {{person.determineMaxAge()}} <span ng-if="person.gender === 'f'" class="label label-danger">Female</span><span ng-if="(person.age > 15 && person.age < 40)" class="label label-success">Can cross</span></li>
+        <li ng-if="person.alive" ng-repeat="person in people">
+          <strong>{{person.name}}</strong>: age: {{person.age}}, maxAge: {{person.determineMaxAge()}}
+          <span ng-if="person.gender === 'f'" class="label label-danger">Female</span>
+          <span ng-if="(person.age > 15 && person.age < 40)" class="label label-success">Can cross</span>
+        </li>
       </ul>
-
-
-
-
     </div>
 
     <!-- build:js(src) scripts/vendor.js -->

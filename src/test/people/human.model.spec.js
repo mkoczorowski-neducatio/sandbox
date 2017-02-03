@@ -173,11 +173,6 @@ describe('people.HumanModel', function () {
         expect(firstBorn.mother).toEqual(sut);
         expect(firstBorn.father).toEqual(specimenB);
       });
-
     });
-
-
   });
-
-
 });
