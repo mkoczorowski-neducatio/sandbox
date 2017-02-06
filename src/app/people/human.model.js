@@ -6,7 +6,7 @@
     .factory('HumanModel', HumanModelFactory);
 
     /** @ngInject */
-    function HumanModelFactory(NamesProvider, Timeline) {
+    function HumanModelFactory(NamesProvider, EventEmitter) {
 
       //funkcje pomocnicze
       var genders = ["f", "m"];
@@ -54,6 +54,7 @@
 
       HumanModel.prototype = {
         _presetProperties: function(properties) {
+          console.log(properties);
           angular.extend(this, properties);
         },
 
@@ -76,9 +77,9 @@
         birth: function() {
           this.gender = getRandomGender();
           this.assignFeatures();
-          this.luck = Math.round(Math.random()*40 - 20);
+          this.luck = randomSpanFromTo(-20, 20);
           this.liveEvent = this.live.bind(this);
-          Timeline.on("newYear", this.liveEvent);
+          EventEmitter.on("newYear", this.liveEvent);
           //-20, 20
         },
 
@@ -105,8 +106,8 @@
             this.age++;
             this.alive = (this.age < this.determineMaxAge());
             if (!this.alive) {
-              Timeline.off("newYear", this.liveEvent);
-              Timeline.trigger("death", {name: this.name});
+              EventEmitter.off("newYear", this.liveEvent);
+              EventEmitter.trigger("death", {name: this.name});
             }
           }
           //console.log("["+this.name + "] age: "+this.age + "/" +this.determineMaxAge());
@@ -127,7 +128,7 @@
             for(var i=0; i<maxChildrenCount; i++) {
               var child = new HumanModel(mother, father);
               child.setName(NamesProvider.generateName(child.gender) + " " + father.getLastName());
-              Timeline.trigger("birth", {name: child.name});
+              EventEmitter.trigger("birth", {name: child.name});
               children.push(child);
               //console.log("Ilosc dzieci: ",i+1, children);
             }

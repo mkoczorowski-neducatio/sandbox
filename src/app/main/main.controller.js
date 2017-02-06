@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope, CartModel, ProductModel, HumanModel, NamesProvider, Timeline, $interval, Population) {
+  function MainController($scope, CartModel, ProductModel, HumanModel, NamesProvider, Timeline, EventEmitter, Population) {
 
     // ng-switch korzysta z tych wartosci i laduje dyrektywy, w zaleznosci od naszego wyboru
     $scope.productTypes = [
@@ -45,20 +45,30 @@
 //    var Ferdynand = new HumanModel(Eve, Adam, {gender: "m", name: "Zbigniew Jakakolwiek", age: 25});
 
 
-     Population.addHuman(new HumanModel(Eve, Adam, {gender: "f", name: "Aneta Johnson", age: 20}));
-     Population.addHuman(new HumanModel(Eve, Adam, {gender: "m", name: "Bartosz Wilson", age: 20}));
 
 
     //console.log("Pierwsza kobieta: ", Halina);
     //console.log("Pierwszy mezczyzna: ", Ferdynand);
 
-    Timeline.on("birth", function(data) {
+    EventEmitter.on("birth", function(data) {
       console.log("born:", data.name);
     });
 
-    Timeline.on("death", function(data) {
+    EventEmitter.on("death", function(data) {
       console.log("died:", data.name);
     });
+
+    $scope.toggleTimeline = function() {
+      if (Timeline.isRunning()) {
+        Timeline.stop();
+      } else {
+        Timeline.start();
+      }
+    };
+
+    $scope.isTimelineRunning = function() {
+      return Timeline.isRunning();
+    };
 
     //var children = Halina.cross(Ferdynand);
     //console.log("Ich dzieci: ", children);
@@ -68,18 +78,6 @@
     //Population.addPeople(children);
 
     $scope.people = Population.getPeople();
-
-    var i = 0;
-
-    var start = function() {
-       $interval(function() {
-        i++;
-        Timeline.trigger("newYear");
-        //if (i % 5 == 0) {
-        Population.crossRandomly();
-        //}
-      }, 500);
-    };
 
     //start();
 

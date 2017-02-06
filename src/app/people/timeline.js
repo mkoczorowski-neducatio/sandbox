@@ -5,31 +5,27 @@
     .module('cartProject')
     .service('Timeline', TimelineService);
 
-    function TimelineService() {
+    /* @ngInject */
+    function TimelineService($interval, EventEmitter, Population) {
+      var intervalHandle = null;
+      var INTERVAL_TIME = 500;
 
-      var eventsRegistry = {};
+      var _onTimeChange = function() {
+        EventEmitter.trigger("newYear");
+        Population.crossRandomly();
+      }
 
       return {
-        trigger: function(eventName, properties) {
-            if (angular.isDefined(eventsRegistry[eventName])) {
-              eventsRegistry[eventName].forEach(function(listener) {
-                listener.call(listener, properties);
-              });
-            }
-         },
-         on: function(eventName, listener) {
-           if (!angular.isDefined(eventsRegistry[eventName])) {
-             eventsRegistry[eventName] = [];
-           }
-           eventsRegistry[eventName].push(listener);
-         },
-         off: function(eventName, listener) {
-           eventsRegistry[eventName].forEach(function(listnr, index, object){
-             if (listnr === listener) {
-               object.splice(index, 1);
-             }
-           });
-         }
+        start: function() {
+          intervalHandle = $interval(_onTimeChange, INTERVAL_TIME);
+        },
+        stop: function() {
+          $interval.cancel(intervalHandle);
+          intervalHandle = null;
+        },
+        isRunning: function() {
+          return intervalHandle !== null;
+        }
       }
     }
 })();
