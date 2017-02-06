@@ -20,12 +20,12 @@
         return Math.round((Math.random() * (to-from)) + from);
       };
 
-      //funkcja przechwytuje jako parametry inteligencję, wygląd i zdrowie z rodziców, ktorzy maja poczatkowe wartości
+      /*funkcja przechwytuje jako parametry inteligencję, wygląd i zdrowie z rodziców, ktorzy maja poczatkowe wartości
+      ustawione na sztywno. Zwraca wygenerowane propertiesy pomiedzy featerusami kobiety i mezczyzny*/
       var randomizeFromParents = function(motherFeature, fatherFeature) {
         return randomSpanFromTo(Math.min(motherFeature, fatherFeature), Math.max(motherFeature, fatherFeature));
       }
 
-      //funkcja
       var whoIsMother = function(human1, human2) {
         return human1.gender === "f" ? human1 : human2;
       };
@@ -140,9 +140,3 @@
       return HumanModel;
     }
 })();
-
-
-/* w modelu carsModel definiuję sobie weight, ktora przechowuje weight i przekazuje jako parametr
-weight, ktory zostaje przekazany do nowo utworzonego obiektu, wtedy w ng-model to co wpisze,
-automatycznie trafia do modelu, skąd za pomocą getWeight może odwolywac sie do metod w cart.model
-*/

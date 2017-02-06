@@ -18,6 +18,7 @@
         return oneGender[Math.round(Math.random()*(oneGender.length-1))];
       }
 
+      //ten array jest prywatny, za pomoca getPeople() możemy uzyskac dostęp do niej
       var _people = [];
 
       return {
@@ -27,26 +28,27 @@
         getPeople: function() {
           return _people;
         },
-        addPeople: function(people) {
-          people.forEach(function(person) {
-            _people.push(person);
+        //przyjmuje obiekt i iteruje po wszystkich, dodając nowo powstale osoby
+        addPeople: function(childrenArr) {
+          childrenArr.forEach(function(newChild) {
+            _people.push(newChild);
           });
         },
         crossRandomly: function() {
           var female = pickPersonByGender("f");
           var male = pickPersonByGender("m");
+          var children = [];
           if (female !== undefined && male !== undefined) {
+            // w tym miejscu buduje sie nowy obiekt
             var children = female.cross(male);
             console.log("Crossing: " + female.name + " + "+male.name + "["+children.length+"]");
+            //przyjmuje obiekt
             this.addPeople(children);
           }
+          /* jezeli warunek nie przejdzie, zwraca pusty array, jesli tak, doda
+          children do _people */
+          return children;
         }
       }
     }
 })();
-
-
-/* w modelu carsModel definiuję sobie weight, ktora przechowuje weight i przekazuje jako parametr
-weight, ktory zostaje przekazany do nowo utworzonego obiektu, wtedy w ng-model to co wpisze,
-automatycznie trafia do modelu, skąd za pomocą getWeight może odwolywac sie do metod w cart.model
-*/

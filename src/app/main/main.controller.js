@@ -24,15 +24,14 @@
       }
     ];
 
-
     //definicja pierwszego i drugiego obiektu
     var Eve = {
-        features: {
-          inteligence: 2,
-          appearance: 10,
-          health: 5
-        }
-      };
+      features: {
+        inteligence: 1,
+        appearance: 10,
+        health: 5
+      }
+    };
     var Adam = {
         features: {
           inteligence: 10,
@@ -41,14 +40,8 @@
         }
       };
 
-//    var Halina = new HumanModel(Eve, Adam, {gender: "f", name: "Halina Jakakolwiek", age: 20});
-//    var Ferdynand = new HumanModel(Eve, Adam, {gender: "m", name: "Zbigniew Jakakolwiek", age: 25});
-
-
-
-
-    //console.log("Pierwsza kobieta: ", Halina);
-    //console.log("Pierwszy mezczyzna: ", Ferdynand);
+    Population.addHuman(new HumanModel(Eve, Adam, {gender: "f", name: "Aneta Johnson", age: 20}));
+    Population.addHuman(new HumanModel(Eve, Adam, {gender: "m", name: "Bartosz Wilson", age: 20}));
 
     EventEmitter.on("birth", function(data) {
       console.log("born:", data.name);
@@ -78,6 +71,7 @@
     //Population.addPeople(children);
 
     $scope.people = Population.getPeople();
+    console.log($scope.people);
 
     //start();
 
