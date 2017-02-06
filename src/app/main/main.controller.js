@@ -73,6 +73,12 @@
     $scope.people = Population.getPeople();
     console.log($scope.people);
 
+    $scope.checkParents = function(index) {
+      $scope.people.forEach(function(person) {
+        console.log(person);
+      });
+    }
+
     //start();
 
   }

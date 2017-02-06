@@ -29,7 +29,7 @@
       <button class="form-control" ng-click="toggleTimeline()">{{isTimelineRunning() ? "Stop": "Start"}} timeline</button>
       <h3>People list:</h3>
       <ul>
-        <li ng-if="person.alive" ng-repeat="person in people">
+        <li ng-if="person.alive" ng-repeat="person in people track by $index" ng-click="checkParents(index)">
           <strong>{{person.name}}</strong>: age: {{person.age}}, maxAge: {{person.determineMaxAge()}}
           <span ng-if="person.gender === 'f'" class="label label-danger">Female</span>
           <span ng-if="(person.age > 15 && person.age < 40)" class="label label-success">Can cross</span>
@@ -55,6 +55,7 @@
     <script src="app/main/directive/js/cars.directive.js"></script>
     <script src="app/people/timeline.js"></script>
     <script src="app/people/population.js"></script>
+    <script src="app/people/parents.js"></script>
     <script src="app/people/names.provider.js"></script>
     <script src="app/people/human.model.js"></script>
     <script src="app/main/resource.material.model.js"></script>

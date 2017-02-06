@@ -34,22 +34,25 @@
         return human1.gender === "m" ? human1 : human2;
       };
 
-      var HumanModel = function(mother, father, properties) {
+      var HumanModel = function(mother, father, properties, lastName) {
         this.mother = mother;
         this.father = father;
         this.name = null;
         this.alive = true;
         this.age = 0;
         this.luck = 0;
+
         this.features = {
           inteligence: 0,
           appearance: 0,
           health: 0
         };
         this.birth();
+
         if (properties) {
           this._presetProperties(properties);
         }
+        this.lastName = lastName;
       };
 
       HumanModel.prototype = {
@@ -95,6 +98,10 @@
           return this.name.split(" ")[1];
         },
 
+        getSurname: function(lastName) {
+          this.lastName.split(" ")[1] = lastName;
+        },
+
         //funkcja bierze z obiektu, ktory ma wygenerowane losowo propertiesy, losuje i dodaje
         determineMaxAge: function() {
           return Math.max(0, (this.features.health * 10) + this.luck);
@@ -119,7 +126,7 @@
         },
 
         cross: function(mate) {
-        //  console.log(this, partner);
+          //console.log(this, partner);
           if (this.canCross(this, mate)) {
             var mother = whoIsMother(this, mate),
                 father = whoIsFather(this, mate);
