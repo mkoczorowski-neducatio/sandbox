@@ -8,7 +8,7 @@
     function PopulationService() {
 
       var perfectSpecimen = function(person, gender) {
-        return (person.gender === gender) && person.alive && person.age > 15 && person.age < 40;
+        return (person.gender === gender) && person.alive && person.age > 15 && person.age < 25;
       };
 
       var pickPersonByGender = function(gender) {
@@ -34,6 +34,7 @@
             _people.push(newChild);
           });
         },
+
         crossRandomly: function() {
           var female = pickPersonByGender("f");
           var male = pickPersonByGender("m");
@@ -42,6 +43,11 @@
             // w tym miejscu buduje sie nowy obiekt
             var children = female.cross(male);
             console.log("Crossing: " + female.name + " + "+male.name + "["+children.length+"]");
+            //console.log(female);
+            var femaleHomeName = female.name;
+            var femaleFirstName = female.getFirstName(female.name);
+            var maleLastName = male.getLastName(male.name);
+            female.name = femaleFirstName + " "+ maleLastName;
             //przyjmuje obiekt
             this.addPeople(children);
           }

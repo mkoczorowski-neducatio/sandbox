@@ -34,9 +34,10 @@
         return human1.gender === "m" ? human1 : human2;
       };
 
-      var HumanModel = function(mother, father, properties, lastName) {
+      var HumanModel = function(mother, father, properties) {
         this.mother = mother;
         this.father = father;
+
         this.name = null;
         this.alive = true;
         this.age = 0;
@@ -48,16 +49,15 @@
           health: 0
         };
         this.birth();
-
         if (properties) {
           this._presetProperties(properties);
         }
-        this.lastName = lastName;
+
       };
 
       HumanModel.prototype = {
         _presetProperties: function(properties) {
-          console.log(properties);
+          //console.log(properties);
           angular.extend(this, properties);
         },
 
@@ -90,16 +90,16 @@
           this.name = name;
         },
 
-        setGender: function(gender) {
-          this.gender = gender;
+        setLastName: function(lastName) {
+          this.lastName = lastName;
+        },
+
+        getFirstName: function() {
+          return this.name.split(" ")[0];
         },
 
         getLastName: function() {
           return this.name.split(" ")[1];
-        },
-
-        getSurname: function(lastName) {
-          this.lastName.split(" ")[1] = lastName;
         },
 
         //funkcja bierze z obiektu, ktory ma wygenerowane losowo propertiesy, losuje i dodaje
@@ -125,9 +125,13 @@
           return human1.gender != human2.gender;
         },
 
+        hasSameName: function(human1, human2) {
+          return human1.lastName !== human2.lastName;
+        },
+
         cross: function(mate) {
           //console.log(this, partner);
-          if (this.canCross(this, mate)) {
+          if ((this.canCross(this, mate)) && (this.hasSameName(this, mate))) {
             var mother = whoIsMother(this, mate),
                 father = whoIsFather(this, mate);
             var children = [];
@@ -135,6 +139,7 @@
             for(var i=0; i<maxChildrenCount; i++) {
               var child = new HumanModel(mother, father);
               child.setName(NamesProvider.generateName(child.gender) + " " + father.getLastName());
+              child.setLastName(father.getLastName());
               EventEmitter.trigger("birth", {name: child.name});
               children.push(child);
               //console.log("Ilosc dzieci: ",i+1, children);
